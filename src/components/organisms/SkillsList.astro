@@ -1,0 +1,43 @@
+---
+// src/components/organisms/SkillsList.astro
+export interface Props {
+  title: string;
+  skills: string[];
+}
+const { title, skills = [] } = Astro.props;
+---
+<section class="skills-list">
+  <h2 class="skills-list__title">{title}</h2>
+  <div class="skills-list__grid">
+    {skills.map(skill => (
+      <div class="skill-badge">{skill}</div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .skills-list {
+    max-width: 960px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .skills-list__title {
+    font-size: 2rem;
+    color: var(--color-text-primary);
+    margin-bottom: 2rem;
+  }
+  .skills-list__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .skill-badge {
+    background-color: var(--color-gray-200);
+    color: var(--color-text-secondary);
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px; /* Pill shape */
+    font-weight: 500;
+  }
+</style>

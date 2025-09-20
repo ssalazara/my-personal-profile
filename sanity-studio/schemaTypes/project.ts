@@ -1,7 +1,7 @@
 // sanity-studio/schemas/project.ts
 import {defineField, defineType} from 'sanity'
 
-export default defineType({
+export const project = defineType({
   name: 'project',
   title: 'Project',
   type: 'document',

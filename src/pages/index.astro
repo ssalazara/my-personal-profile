@@ -1,55 +1,74 @@
 ---
 // src/pages/index.astro
 import { getSanityClient } from '@/lib/sanityClient.ts';
+
+// Import all our components
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/organisms/Hero.astro';
+import SkillsList from '@/components/organisms/SkillsList.astro';
 import ProjectCard from '@/components/organisms/ProjectCard.astro';
 
-// Data fetching remains the same
-const client = getSanityClient({
+// A single, more efficient query to get all data for the page
+const query = `*[_type == "home"][0]{
+  heroTitle,
+  heroSubtitle,
+  skillsTitle,
+  skills,
+  "projects": *[_type == "project"]{ title, description, projectUrl }
+}`;
+
+// Fetch all data
+const pageData = await getSanityClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
-});
-const query = `*[_type == "project"]{title, description, projectUrl}`;
-const projects = await client.fetch(query);
+}).fetch(query);
+
+// Destructure for easier use, with fallbacks to prevent errors
+const { heroTitle, heroSubtitle, skillsTitle, skills, projects = [] } = pageData || {};
 ---
 <BaseLayout title="Simon Salazar - Personal Profile">
-  <main class="profile-page">
-    <header class="profile-header">
-      <h1>Hello, World!</h1>
-	  <h2>I'm Simon Salazar Albornoz</h2>
-      <p>Welcome to my personal profile page.</p>
-    </header>
-    
-    <section class="projects-grid">
-      {projects.map(project => (
-        <ProjectCard 
-          title={project.title} 
-          description={project.description} 
-          url={project.projectUrl} 
-        />
-      ))}
+  
+  <!-- Render the Hero Section with data from Sanity -->
+  {heroTitle && <Hero title={heroTitle} subtitle={heroSubtitle} />}
+
+  <!-- Container for the rest of the page content -->
+  <div class="page-content">
+
+    <!-- Render the Skills Section -->
+    {skills && skills.length > 0 && <SkillsList title={skillsTitle} skills={skills} />}
+
+    <!-- Render the Projects Section -->
+    <section class="projects-section">
+      <h2 class="projects-section__title">Featured Projects</h2>
+      <div class="projects-grid">
+        {projects.map(project => (
+          <ProjectCard 
+            title={project.title} 
+            description={project.description} 
+            url={project.projectUrl} 
+          />
+        ))}
+      </div>
     </section>
-  </main>
+    
+  </div>
+
 </BaseLayout>
 
 <style>
-  .profile-page {
+  .page-content {
     max-width: 960px;
     margin: auto;
-    padding: 3rem 1.5rem;
+    padding: 0 1.5rem 4rem; /* Add bottom padding */
   }
-  .profile-header {
+  .projects-section {
+    margin-top: 4rem;
+  }
+  .projects-section__title {
+    font-size: 2rem;
+    color: var(--color-text-primary);
     text-align: center;
-    margin-bottom: 3rem;
-  }
-  .profile-header h1 {
-    font-size: 2.5rem;
-    color: var(--color-text-primary); /* CHANGED from #111 */
-    margin-bottom: 0.5rem;
-  }
-  .profile-header p {
-    font-size: 1.125rem;
-    color: var(--color-text-secondary); /* CHANGED from #555 */
+    margin-bottom: 2rem;
   }
   .projects-grid {
     display: grid;

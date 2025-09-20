@@ -1,0 +1,35 @@
+---
+// src/components/organisms/Hero.astro
+export interface Props {
+  title: string;
+  subtitle?: string;
+}
+const { title, subtitle } = Astro.props;
+---
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">{title}</h1>
+    {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    background-color: var(--color-background-card);
+    border-bottom: 1px solid var(--color-border-primary);
+  }
+  .hero__title {
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive font size */
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+    line-height: 1.1;
+  }
+  .hero__subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    max-width: 60ch; /* Limits line length for readability */
+    margin: 0 auto;
+  }
+</style>
