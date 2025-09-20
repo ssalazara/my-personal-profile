@@ -1,0 +1,52 @@
+/* src/styles/global.css */
+
+:root {
+  /* 
+   * ==========================================
+   * COLOR PALETTE
+   * ==========================================
+   * Using a base name (e.g., 'navy') and shades (e.g., '500', '700')
+   * is a common and scalable practice.
+   */
+
+  /* Brand Colors */
+  --color-brand-navy: #001f3f;       /* The deep navy blue */
+  --color-brand-navy-light: #003366; /* A slightly lighter shade for hovers */
+  --color-brand-accent: #007bff;     /* A vibrant blue for links and accents */
+
+  /* Grayscale Colors */
+  --color-gray-900: #1a202c; /* Near black for text */
+  --color-gray-700: #4a5568; /* Medium-dark gray for subheadings */
+  --color-gray-500: #a0aec0; /* Medium gray for borders */
+  --color-gray-200: #e2e8f0; /* Light gray for dividers */
+  --color-gray-100: #f4f7f9; /* Off-white for page backgrounds */
+  --color-white: #ffffff;
+
+  /*
+   * ==========================================
+   * SEMANTIC COLORS
+   * ==========================================
+   * Map the palette to its purpose. This is the magic step.
+   * If you ever want to change your primary text color, you only
+   * change it in ONE place right here.
+   */
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-700);
+  --color-text-link: var(--color-brand-accent);
+  --color-text-link-hover: var(--color-brand-navy);
+
+  --color-background-body: var(--color-gray-100);
+  --color-background-card: var(--color-white);
+  --color-background-footer: var(--color-gray-200);
+
+  --color-border-primary: var(--color-gray-200);
+
+  /*
+   * ==========================================
+   * TYPOGRAPHY & SPACING (Future-proofing)
+   * ==========================================
+   * You can add fonts and spacing units here later.
+   */
+  --font-family-sans: system-ui, -apple-system, sans-serif;
+  --spacing-unit: 8px; /* Base unit for margins, padding, etc. */
+}

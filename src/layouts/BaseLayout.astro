@@ -2,6 +2,7 @@
 // src/layouts/BaseLayout.astro
 import Header from '@/components/organisms/Header.astro';
 import Footer from '@/components/organisms/Footer.astro';
+import '../styles/global.css'; // Import global styles
 
 export interface Props {
   title: string;
@@ -16,18 +17,18 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     
-    <style is:global>
+<style>
       body {
-        font-family: system-ui, sans-serif;
-        background: #f4f7f9;
-        color: #333;
+        font-family: var(--font-family-sans); /* Use a font variable */
+        background-color: var(--color-background-body); /* Use a color variable */
+        color: var(--color-text-primary);
         margin: 0;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
       }
       main {
-        flex-grow: 1; /* This makes the main content area expand to fill space */
+        flex-grow: 1;
       }
     </style>
   </head>
