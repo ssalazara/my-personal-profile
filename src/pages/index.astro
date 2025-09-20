@@ -8,10 +8,12 @@ import Hero from '@/components/organisms/Hero.astro';
 import SkillsList from '@/components/organisms/SkillsList.astro';
 import ProjectCard from '@/components/organisms/ProjectCard.astro';
 
-// A single, more efficient query to get all data for the page
+// 1. YOUR CORRECT QUERY IS HERE
 const query = `*[_type == "home"][0]{
   heroTitle,
   heroSubtitle,
+  heroImage,
+  heroImagePosition,
   skillsTitle,
   skills,
   "projects": *[_type == "project"]{ title, description, projectUrl }
@@ -23,13 +25,28 @@ const pageData = await getSanityClient({
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
 }).fetch(query);
 
-// Destructure for easier use, with fallbacks to prevent errors
-const { heroTitle, heroSubtitle, skillsTitle, skills, projects = [] } = pageData || {};
+// 2. DESTRUCTURE THE DATA, INCLUDING `heroImage`
+// This pulls the variables out of the result so you can use them.
+const { 
+  heroTitle, 
+  heroSubtitle, 
+  heroImage, 
+  heroImagePosition, 
+  skillsTitle, 
+  skills, 
+  projects = [] 
+} = pageData || {};
 ---
 <BaseLayout title="Simon Salazar - Personal Profile">
   
-  <!-- Render the Hero Section with data from Sanity -->
-  {heroTitle && <Hero title={heroTitle} subtitle={heroSubtitle} />}
+  <!-- 3. PASS THE `heroImage` PROP TO THE HERO COMPONENT -->
+  <!-- This sends the data into the Hero component so it can be displayed. -->
+  {heroTitle && <Hero 
+    title={heroTitle} 
+    subtitle={heroSubtitle} 
+    image={heroImage} 
+    imagePosition={heroImagePosition} 
+  />}
 
   <!-- Container for the rest of the page content -->
   <div class="page-content">

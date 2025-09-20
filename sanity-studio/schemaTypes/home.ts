@@ -29,6 +29,29 @@ export const home = defineType({
       rows: 3,
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'The main image for the hero section.',
+      options: {
+        hotspot: true, // Enables the user to crop/position the image focus
+      },
+    }),
+    defineField({
+      name: 'heroImagePosition',
+      title: 'Hero Image Position',
+      type: 'string',
+      description: 'Choose whether the image appears on the left or right of the text.',
+      options: {
+        list: [
+          {title: 'Left', value: 'left'},
+          {title: 'Right', value: 'right'},
+        ],
+        layout: 'radio', // Makes it a radio button selector
+      },
+      initialValue: 'right', // Set a default value
+    }),
+    defineField({
       name: 'skillsTitle',
       title: 'Skills Section Title',
       type: 'string',
