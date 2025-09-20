@@ -1,0 +1,19 @@
+---
+// src/components/atoms/SiteLogo.astro
+export interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+<div class="site-logo">
+  <a href="/">{text}</a>
+</div>
+
+<style>
+  .site-logo a {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #111;
+    text-decoration: none;
+  }
+</style>

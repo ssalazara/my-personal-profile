@@ -1,0 +1,29 @@
+---
+// src/components/organisms/Header.astro
+import SiteLogo from '@/components/atoms/SiteLogo.astro';
+import PrimaryNavigation from '@/components/molecules/PrimaryNavigation.astro';
+---
+<header class="site-header">
+  <div class="site-header__container">
+    <SiteLogo text="Simon Salazar" />
+    <PrimaryNavigation />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .site-header__container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>

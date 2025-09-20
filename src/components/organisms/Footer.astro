@@ -1,0 +1,18 @@
+---
+// src/components/organisms/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <p>&copy; {currentYear} Simon Salazar. All rights reserved.</p>
+</footer>
+
+<style>
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    margin-top: 4rem;
+    background: #e2e8f0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+</style>

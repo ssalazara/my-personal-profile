@@ -1,0 +1,16 @@
+---
+// src/components/molecules/PrimaryNavigation.astro
+import NavLink from '@/components/atoms/NavLink.astro';
+---
+<nav class="primary-nav">
+  <NavLink href="/about" text="About" />
+  <NavLink href="/projects" text="Projects" />
+  <NavLink href="/contact" text="Contact" />
+</nav>
+
+<style>
+  .primary-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+</style>

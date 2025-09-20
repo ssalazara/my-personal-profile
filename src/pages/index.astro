@@ -1,64 +1,58 @@
 ---
-// Import our new function
-import { getSanityClient } from '../lib/sanityClient.ts';
+// src/pages/index.astro
+import { getSanityClient } from '@/lib/sanityClient.ts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/organisms/ProjectCard.astro';
 
-// Define the Sanity config object using Astro's server-side env variables
-const sanityConfig = {
+// Data fetching remains the same
+const client = getSanityClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
-};
-
-// Get the client by passing the config to our function
-const client = getSanityClient(sanityConfig);
-
-// The rest of the code is the same!
+});
 const query = `*[_type == "project"]{title, description, projectUrl}`;
 const projects = await client.fetch(query);
-
-
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>My Personal Profile</title>
-    <style>
-      body { font-family: system-ui, sans-serif; background: #f0f0f0; color: #333; }
-      main { max-width: 800px; margin: auto; padding: 2rem; }
-      h1 { color: #111; }
-      .project { background: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-      .project h2 { margin-top: 0; }
-      .project a { color: #007bff; text-decoration: none; font-weight: bold; }
-    </style>
-  </head>
-  <body>
-    <main>
-	<div>
-      <h1>Hello, World!</h1>
+<BaseLayout title="Simon Salazar - Personal Profile">
+  <main class="profile-page">
+    <header class="profile-header">
+      <h1>Hello, I'm Simon Salazar</h1>
       <p>Welcome to my personal profile page. Here are some of my projects:</p>
-	  <ul>
-		<li>Clustering RAIDD Logs</li> <br>
-		<li>Apply Digital hackathon winner project: <b>Rosetta Bridge</b></li> <br>
-		<li>Personal Profile site</li>
-	  </ul>
-    </div>
-	
-	<div>
-		<h2>Professional Profile</h2>
-	</div>
+    </header>
+    
+    <section class="projects-grid">
+      {projects.map(project => (
+        <ProjectCard 
+          title={project.title} 
+          description={project.description} 
+          url={project.projectUrl} 
+        />
+      ))}
+    </section>
+  </main>
+</BaseLayout>
 
-      <div class="projects-list">
-        {projects.map(project => (
-          <div class="project">
-            <h2>{project.title}</h2>
-            <p>{project.description}</p>
-            {project.projectUrl && <a href={project.projectUrl} target="_blank" rel="noopener noreferrer">View Project &rarr;</a>}
-          </div>
-        ))}
-      </div>
-    </main>
-  </body>
-</html>
+<style>
+  .profile-page {
+    max-width: 960px;
+    margin: auto;
+    padding: 3rem 1.5rem;
+  }
+  .profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .profile-header h1 {
+    font-size: 2.5rem;
+    color: #111;
+    margin-bottom: 0.5rem;
+  }
+  .profile-header p {
+    font-size: 1.125rem;
+    color: #555;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
