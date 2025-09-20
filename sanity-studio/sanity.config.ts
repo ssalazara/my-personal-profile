@@ -2,8 +2,8 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import project from './schemaTypes/project.ts' // <-- Import the new schema
-import home from './schemaTypes/home.ts' // <-- Import the new schema
+import project from './schemaTypes/project' // <-- Import the new schema
+import home from './schemaTypes/home' // <-- Import the new schema
 
 
 
