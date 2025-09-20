@@ -36,9 +36,20 @@ const projects = await client.fetch(query);
   </head>
   <body>
     <main>
+	<div>
       <h1>Hello, World!</h1>
       <p>Welcome to my personal profile page. Here are some of my projects:</p>
-      
+	  <ul>
+		<li>Clustering RAIDD Logs</li> <br>
+		<li>Apply Digital hackathon winner project: <b>Rosetta Bridge</b></li> <br>
+		<li>Personal Profile site</li>
+	  </ul>
+    </div>
+	
+	<div>
+		<h2>Professional Profile</h2>
+	</div>
+
       <div class="projects-list">
         {projects.map(project => (
           <div class="project">
