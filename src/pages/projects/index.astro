@@ -1,0 +1,52 @@
+---
+// src/pages/projects/index.astro
+import { getSanityClient } from '@/lib/sanityClient.ts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/organisms/ProjectCard.astro';
+
+// Fetch all projects to display in the grid
+const query = `*[_type == "project"]{
+  title,
+  "slug": slug.current,
+  description,
+  projectUrl
+}`;
+const client = getSanityClient({
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+});
+const projects = await client.fetch(query);
+---
+<BaseLayout title="My Projects">
+  <div class="page-container">
+    <h1 class="page-title">Featured Projects</h1>
+    <div class="projects-grid">
+      {projects.map(project => (
+        <ProjectCard 
+          title={project.title} 
+          description={project.description} 
+          url={`/projects/${project.slug}`}  
+          linkText="View Details"
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+<style>
+  .page-container {
+    max-width: 960px;
+    margin: auto;
+    padding: 3rem 1.5rem;
+  }
+  .page-title {
+    font-size: 2rem;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
