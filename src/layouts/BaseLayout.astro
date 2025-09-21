@@ -2,7 +2,7 @@
 // src/layouts/BaseLayout.astro
 import Header from '@/components/organisms/Header.astro';
 import Footer from '@/components/organisms/Footer.astro';
-import '../styles/global.css'; // Import global styles
+import '../styles/global.css';
 
 export interface Props {
   title: string;
@@ -16,11 +16,27 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+  </head>
+  <body>
+    <!-- 
+      THIS IS THE FIX: 
+      We are putting the Header component back at the top of every page.
+    -->
+    <Header />
+
+    <main>
+      <!-- The <slot /> is where your index.astro content (including the Hero) is injected -->
+      <slot />
+    </main>
     
-<style>
+    <!-- We'll also ensure the Footer is here -->
+    <Footer />
+    
+    <style is:global>
+      /* These are the essential global styles for the page structure */
       body {
-        font-family: var(--font-family-sans); /* Use a font variable */
-        background-color: var(--color-background-body); /* Use a color variable */
+        font-family: var(--font-family-sans);
+        background-color: var(--color-background-body);
         color: var(--color-text-primary);
         margin: 0;
         display: flex;
@@ -28,16 +44,8 @@ const { title } = Astro.props;
         min-height: 100vh;
       }
       main {
-        flex-grow: 1;
+        flex-grow: 1; /* Pushes the footer to the bottom */
       }
     </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <!-- The <slot /> is where the unique content of each page will go -->
-      <slot />
-    </main>
-    <Footer />
   </body>
 </html>
